@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'profiles/css/profile.css' %}">
+{% endblock %}
+
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="overlay"></div>
+
+{% for item in wishlist_items %}
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">{{ item.product.name }}</h5>
+        <p class="card-text">{{ item.product.description }}</p>
+        <img src="{{ item.product.image.url }}" alt="product image">
+        <a href="{% url 'profiles:remove_from_wishlist' item.product.id %}" class="btn btn-danger">Remove from
+            Wishlist</a>
+    </div>
+</div>
+{% endfor %}
+
+
+{% endblock %}
