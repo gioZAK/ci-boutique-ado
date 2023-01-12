@@ -27,6 +27,9 @@ class UserProfile(models.Model):
 
 
 class Wishlist(models.Model):
+    """
+    Allows the user to have a wishlsit
+    """
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 

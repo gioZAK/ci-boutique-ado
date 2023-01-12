@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import UserProfile
@@ -57,13 +58,12 @@ def wishlist(request):
     context = {'wishlist_items': wishlist_items}
     return render(request, 'profiles/wishlist.html', context)
 
-
 @login_required
 def add_to_wishlist(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     wishlist_item = Wishlist(user=request.user, product=product)
     wishlist_item.save()
-    return redirect('profiles:wishlist')
+    return redirect(reverse('wishlist'))
 
 
 @login_required
@@ -71,4 +71,4 @@ def remove_from_wishlist(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     wishlist_item = get_object_or_404(Wishlist, user=request.user, product=product)
     wishlist_item.delete()
-    return redirect('profiles:wishlist')
+    return redirect(reverse('wishlist'))

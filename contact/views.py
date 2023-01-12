@@ -24,12 +24,9 @@ def contact(request):
             request.session['contact'] = form.cleaned_data
             return redirect(reverse('contact:contact_success'))
 
-            messages.success(request, f'Form sent with success.')
-
     else:
         form = ContactForm(user=request.user)
     return render(request, 'contact/contact.html', {'form': form})
-    messages.warning(request, f'Please, fill all required fields.')
 
 
 def contact_success(request):
