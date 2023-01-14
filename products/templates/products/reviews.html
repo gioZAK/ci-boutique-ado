@@ -3,18 +3,10 @@
 {% for review in reviews %}
 <div class="card mb-3">
     <div class="card-body">
-        <p class="card-text">{{ review.user.username }} said:</p>
+        <p class="card-text">{{ review.user.username }}'s Review:</p>
         <p class="card-text">{{ review.text }}</p>
         {% if user == review.user %}
         <div class="d-flex justify-content-between align-items-center">
-            {% if review.id == review.id %}
-            <form method="post" action="{% url 'edit_review' product.id review.id %}">
-                {% csrf_token %}
-                {{ form|crispy }}
-            </form>
-            {% else %}
-            <a class="btn btn-secondary" href="{% url 'edit_review' product.id review.id %}">Edit</a>
-            {% endif %}
             <a class="btn btn-danger" href="{% url 'delete_review' product.id review.id %}">Delete</a>
         </div>
         {% endif %}

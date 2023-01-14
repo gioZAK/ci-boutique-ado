@@ -64,7 +64,7 @@ def product_detail(request, product_id):
     """ A view to show individual product details """
 
     product = get_object_or_404(Product, pk=product_id)
-    reviews = Review.objects.filter(product=product)
+    reviews = Review.objects.filter(product=product, is_approved=True)
     review_form = ReviewForm()
     context = {
         'product': product,
@@ -146,6 +146,7 @@ def delete_product(request, product_id):
     return redirect(reverse('products'))
 
 
+@login_required
 def add_review(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     if request.method == 'POST':
@@ -155,6 +156,7 @@ def add_review(request, product_id):
             review.product = product
             review.user = request.user
             review.save()
+            messages.success(request, "Your review has been submitted and is awaiting approval.")
             return redirect('product_detail', product_id=product_id)
     else:
         form = ReviewForm()
@@ -165,26 +167,7 @@ def add_review(request, product_id):
     }
     return render(request, template, context)
 
-
-def edit_review(request, product_id, review_id):
-    review = get_object_or_404(Review, pk=review_id)
-    product = get_object_or_404(Product, pk=product_id)
-    if request.method == 'POST':
-        form = ReviewForm(request.POST, instance=review)
-        if form.is_valid():
-            form.save()
-            return redirect('product_detail', product_id=product_id)
-    else:
-        form = ReviewForm(instance=review)
-    template = 'reviews/edit_review.html'
-    context = {
-        'form': form,
-        'product': product,
-        'review': review
-    }
-    return render(request, 'products/reviews.html', context)
-
-
+@login_required
 def delete_review(request, product_id, review_id):
     review = Review.objects.get(id=review_id)
     review.delete()
