@@ -294,4 +294,21 @@ input[name='q']::placeholder {
     body {
         height: calc(100vh - 116px);
     }
+
+    .card {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .card-header {
+        flex-wrap: wrap;
+    }
+
+    .card-footer {
+        flex-wrap: wrap;
+    }
+
+    .text-muted {
+        display: none;
+    }
 }
