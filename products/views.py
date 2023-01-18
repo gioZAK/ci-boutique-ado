@@ -162,6 +162,9 @@ def add_review(request, product_id):
             review.save()
             messages.success(request, "Your review has been submitted and is awaiting approval.")
             return redirect('product_detail', product_id=product_id)
+        else:
+            messages.error(request, "Something went wrong with your review.")
+            return redirect('product_detail', product_id=product_id)
     else:
         form = ReviewForm()
     template = 'reviews/add_review.html'
@@ -171,8 +174,10 @@ def add_review(request, product_id):
     }
     return render(request, template, context)
 
+
 @login_required
 def delete_review(request, product_id, review_id):
     review = Review.objects.get(id=review_id)
     review.delete()
-    return redirect(reverse('product_detail', args=[product_id]))
+    messages.success(request, "Your review was deleted with success.")
+    return redirect('product_detail', product_id=product_id)

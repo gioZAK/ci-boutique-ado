@@ -106,9 +106,7 @@
                     </div>
                 </form>
                 {% if is_product_in_wishlist %}
-                <a href="{% url 'remove_from_wishlist' product.id %}"
-                    class="btn btn-danger rounded-0 text-uppercase mt-5">Remove
-                    from
+                <a href="{% url 'wishlist' %}" class="btn btn-primary rounded-0 text-uppercase mt-5">Manage
                     Wishlist</a>
                 {% else %}
                 <a href="{% url 'add_to_wishlist' product.id %}"
@@ -116,11 +114,11 @@
                     to Wishlist</a>
                 {% endif %}
             </div>
-
+            {% include "products/reviews.html" %}
         </div>
     </div>
     <div class="m-5">
-        {% include "products/reviews.html" %}
+
     </div>
 </div>
 {% endblock %}
